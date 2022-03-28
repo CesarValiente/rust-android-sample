@@ -12,21 +12,28 @@ pub type Callback = unsafe extern "C" fn(*const c_char) -> ();
 
 #[no_mangle]
 #[allow(non_snake_case)]
-pub extern "C" fn invokeCallbackViaJNA(callback: Callback) {
-    let s = CString::new("Hello from Rust").unwrap();
-    unsafe { callback(s.as_ptr()); }
-}
-
-#[no_mangle]
-#[allow(non_snake_case)]
-pub extern "C" fn Java_com_cesarvaliente_rustandroid_MainActivity_invokeCallbackViaJNI(
+pub extern "C" fn Java_com_cesarvaliente_rustandroid_MainActivity_invokeCallbackFromAppInit(
     env: JNIEnv,
     _class: JClass,
     callback: JObject
 ) {
-    let s = String::from("Hello from Rust");
+    let s = String::from("Hello from Rust from JNI");
     let response = env.new_string(&s)
         .expect("Couldn't create java string!");
-    env.call_method(callback, "callback", "(Ljava/lang/String;)V",
+    env.call_method(callback, "callbackFromInit", "(Ljava/lang/String;)V",
+                    &[JValue::from(JObject::from(response))]).unwrap();
+}
+
+#[no_mangle]
+#[allow(non_snake_case)]
+pub extern "C" fn Java_com_cesarvaliente_rustandroid_MainActivity_invokeCallbackViaButton(
+    env: JNIEnv,
+    _class: JClass,
+    callback: JObject
+) {
+    let s = String::from("You clicked, we are writing this from Rust, and now we invoke the callback that will show up the dialog :-)");
+    let response = env.new_string(&s)
+        .expect("Couldn't create java string!");
+    env.call_method(callback, "callbackFromButton", "(Ljava/lang/String;)V",
                     &[JValue::from(JObject::from(response))]).unwrap();
 }
