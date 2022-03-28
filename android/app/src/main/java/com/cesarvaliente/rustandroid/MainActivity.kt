@@ -1,9 +1,9 @@
 package com.cesarvaliente.rustandroid
 
 import android.os.Bundle
-import android.view.View
-import android.widget.TextView
+import androidx.appcompat.app.AlertDialog
 import androidx.appcompat.app.AppCompatActivity
+import com.cesarvaliente.rustandroid.databinding.ActivityMainBinding
 
 class MainActivity : AppCompatActivity(), JNICallback {
     companion object {
@@ -15,12 +15,12 @@ class MainActivity : AppCompatActivity(), JNICallback {
         System.loadLibrary("rust")
     }
 
-    var textView: TextView? = null
+    private lateinit var binding : ActivityMainBinding
+
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-        setContentView(R.layout.activity_main)
-        textView = findViewById<View>(R.id.textview) as TextView
-        invokeCallbackViaJNI(this)
+        binding = ActivityMainBinding.inflate(layoutInflater)
+        setContentView(binding.root)
     }
 
     /**
