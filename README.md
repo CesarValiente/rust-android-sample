@@ -7,8 +7,8 @@ This project is based in the [mozilla/rust-android-gradle plugin](https://github
 In this sample we build a very small `Rust library` and a very simple `Kotlin Android app` that uses that library.
 The app just call the Rust library and gets a result back using callback
 
-![Sample just after being lauched](android/art/sample_init.png)
-![Sample showing a dialog](android/art/sample_dialog.png)
+![App scenarios](android/art/app_scenarios.png)
+
 
 ## How to build and deploy?
 
